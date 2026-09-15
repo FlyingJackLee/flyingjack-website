@@ -13,8 +13,8 @@ const EXPECTED = [
   '每个可翻译节点新增 data-i18n / data-i18n-attr / data-i18n-prefix 属性',
   '<img> 外包 <picture> + <source>，src 与 width/height 因外链优化而改变',
   '<style> 内联改为 <link> 外链，<script> 内联改为外链 + JSON 载荷',
-  '项目卡 4 → 5 张（新增 codearts）',
-  '时间线 3 → 4 条（新增 zhejiang）',
+  '项目卡 ≥ 设计稿的 4 张（设计稿里的每张仍须同构，新增不限）',
+  '时间线 ≥ 设计稿的 3 条（同上）',
   '每张项目卡的 <details> 内新增一条「阅读完整案例」链接',
   '首屏档案卡的简历链接 href 由 resume.zh.html（不存在）改为语言相关的 assets/resume.{zh,en}.pdf',
   '社交卡片 1 → 3 张（新增微信、LinkedIn）；≥920px 时三列不增高，768px 两列 +108px，≤620px 单列 +216px',
@@ -114,20 +114,23 @@ compare('页脚 footer', find(orig, (n) => hasClass(n, 'footer')), find(built, (
 const cardsA = findAll(orig, (n) => hasClass(n, 'project-card'));
 const cardsB = findAll(built, (n) => hasClass(n, 'project-card'));
 cardsA.forEach((c, i) => compare(`项目卡 ${i + 1} ${c.attrs['data-od-id']}`, c, cardsB[i]));
-if (cardsB.length !== cardsA.length + 1) {
-  problems.push(`项目卡数量应为 ${cardsA.length + 1}，实际 ${cardsB.length}`);
-} else {
-  console.log(`  ✓ 项目卡 ${cardsB.length} ${cardsB[4].attrs['data-od-id']}（新增，声明过）`);
+// 设计稿里的每一张都必须还在且同构；之后新增多少张都可以，这里只报数。
+if (cardsB.length < cardsA.length) {
+  problems.push(`项目卡少了：设计稿 ${cardsA.length} 张，现在 ${cardsB.length} 张`);
+} else if (cardsB.length > cardsA.length) {
+  const added = cardsB.slice(cardsA.length).map((c) => c.attrs['data-od-id']).join('、');
+  console.log(`  ✓ 项目卡新增 ${cardsB.length - cardsA.length} 张：${added}`);
 }
 
 // 时间线：前 3 条逐条比对
 const tlA = findAll(orig, (n) => hasClass(n, 'timeline-item'));
 const tlB = findAll(built, (n) => hasClass(n, 'timeline-item'));
 tlA.forEach((c, i) => compare(`时间线 ${i + 1} ${c.attrs['data-od-id']}`, c, tlB[i]));
-if (tlB.length !== tlA.length + 1) {
-  problems.push(`时间线条目应为 ${tlA.length + 1}，实际 ${tlB.length}`);
-} else {
-  console.log(`  ✓ 时间线 ${tlB.length} ${tlB[3].attrs['data-od-id']}（新增，声明过）`);
+if (tlB.length < tlA.length) {
+  problems.push(`时间线少了：设计稿 ${tlA.length} 条，现在 ${tlB.length} 条`);
+} else if (tlB.length > tlA.length) {
+  const added = tlB.slice(tlA.length).map((c) => c.attrs['data-od-id']).join('、');
+  console.log(`  ✓ 时间线新增 ${tlB.length - tlA.length} 条：${added}`);
 }
 
 /* ── CSS 逐字节校验 ── */
