@@ -1,0 +1,35 @@
+/* ─────────────────────────────────────────────────────────────────
+   本轮新增样式。styles.css 与原设计稿逐字节一致，不在其中添加任何东西。
+   ───────────────────────────────────────────────────────────────── */
+
+/* <picture> 不产生盒子，让 <img class="profile-photo"> 仍然是
+   .portrait-stage 的直接 flex 子项。否则 img 会退化成行内替换元素，
+   底部因基线对齐多出几像素空隙，且 max-width 的解析基准改变。 */
+picture { display: contents; }
+
+/* ─── 项目详情页 ─── */
+.case-head { max-width: 860px; margin-bottom: var(--space-12); }
+.case-head h1 { margin-bottom: var(--space-3); font-size: clamp(34px, 5vw, var(--text-4xl)); font-weight: 500; line-height: var(--leading-tight); }
+.case-meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0 0 var(--space-5); color: var(--muted); font: var(--text-sm) var(--font-mono); }
+.case-head .tags { margin-bottom: 0; }
+
+.case-body { display: grid; gap: var(--space-12); max-width: 860px; }
+.case-block { border-top: 1px solid var(--border); padding-top: var(--space-6); }
+.case-block h2 { margin-bottom: var(--space-5); font-size: var(--text-xl); font-weight: 500; }
+.case-block p { margin: 0 0 var(--space-4); color: var(--fg-2); font-size: var(--text-base); }
+.case-block p:last-child { margin-bottom: 0; }
+.case-block ul { margin: 0; padding-left: var(--space-5); color: var(--muted); font-size: var(--text-sm); }
+.case-block li + li { margin-top: var(--space-4); }
+.case-block ul + p, .case-block p + ul { margin-top: var(--space-4); }
+.case-links { display: grid; gap: var(--space-2); }
+.case-links a { min-height: 44px; display: inline-flex; align-items: center; width: fit-content; color: var(--fg); border-bottom: 1px solid var(--border); font: var(--text-sm) var(--font-mono); transition: color var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard); }
+.case-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+.case-foot { margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--border-soft); }
+
+@media (max-width: 620px) {
+  .case-body { gap: var(--space-8); }
+}
+
+/* 折叠里的「阅读完整案例」链接，复用已有的 .resume-link 外观 */
+.project-details .resume-link { margin-top: var(--space-4); }

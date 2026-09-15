@@ -1,0 +1,14 @@
+{
+  "name": "flyingjack-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "verify": "node verify.js",
+    "dev": "node serve.js"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  }
+}

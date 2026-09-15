@@ -1,0 +1,525 @@
+# ─────────────────────────────────────────────────────────────────────
+#  站点数据源 —— 按网页设计建模，不按简历建模
+#
+#  ⚠ 中文字符串必须写在一行内。
+#    YAML 的折叠标量（>-）会把换行变成空格，中文不需要空格，
+#    会被静默插入。build.js 会检测并报错，但别依赖它。
+#    英文可以放心用 >- 折行。
+#
+#  每个 {zh, en} 字段会自动获得一个 data-i18n 路径键，
+#  例如 hero.lead / projects.items.0.blurb
+# ─────────────────────────────────────────────────────────────────────
+
+site:
+  domain: resume.flyingjack.top
+  url: https://resume.flyingjack.top
+  default_lang: zh
+  brand:
+    head: ZUMIN
+    mark: "/"
+    tail: DEV
+  title:
+    zh: 李祖民｜未来系统构建者
+    en: Zumin Li | Builder of Future Systems
+  description:
+    zh: 李祖民的未来感开发者作品集，展示 AI Agent、系统架构与工程交付能力。
+    en: >-
+      Zumin Li’s developer portfolio, featuring AI agents, system
+      architecture, and production delivery.
+
+# ── 界面控件文案（非内容，纯 UI） ──
+ui:
+  nav_label:        { zh: 主导航,   en: Primary navigation }
+  mobile_nav_label: { zh: 移动导航, en: Mobile navigation }
+  menu:             { zh: 导航,     en: MENU }
+  menu_open_label:  { zh: 打开导航, en: Open navigation }
+  menu_close_label: { zh: 关闭导航, en: Close navigation }
+  language_button:  { zh: EN,       en: 中 }
+  language_label:   { zh: 切换到英文, en: Switch to Chinese }
+  light_mode:       { zh: 浅色模式, en: Light }
+  dark_mode:        { zh: 深色模式, en: Dark }
+  light_label:      { zh: 切换到浅色模式, en: Switch to light mode }
+  dark_label:       { zh: 切换到深色模式, en: Switch to dark mode }
+  theme_label:      { zh: 切换深浅色主题, en: Toggle colour theme }
+  profile_label:    { zh: 个人档案, en: Profile summary }
+  filter_label:     { zh: 筛选项目, en: Filter projects }
+  social_label:     { zh: 社交媒体联系方式, en: Social media contacts }
+  copy:             { zh: 复制,     en: COPY }
+  copied:           { zh: 已复制,   en: COPIED }
+  copy_success:     { zh: 账号已复制到剪贴板。, en: Account copied to clipboard. }
+  copy_error:       { zh: 复制失败，请手动选择账号。, en: Copy failed. Select the account manually. }
+  social_empty:     { zh: 社交账号正在更新，可先通过邮件联系。, en: Social profiles are being updated. Email is still available. }
+  back_home:        { zh: 返回首页, en: Back to home }
+
+nav:
+  - { href: "#capabilities", label: { zh: 能力,   en: Capabilities } }
+  - { href: "#projects",     label: { zh: 项目,   en: Projects } }
+  - { href: "#experience",   label: { zh: 经历,   en: Experience } }
+  - { href: "#stack",        label: { zh: 技术栈, en: Stack } }
+
+# ── 首屏 ──
+hero:
+  outline_word: AGENT            # 巨型描边字，只能一个词
+  eyebrow: { zh: 你好，我是, en: "HELLO, I AM" }
+  name:    { zh: 李祖民, en: Zumin Li }
+  role:    { zh: 软件工程师 / AI Agent 开发, en: SOFTWARE ENGINEER / AI AGENT DEVELOPER }
+  lead:
+    zh: 把模型、工具与业务流程组织成可靠系统。从方案验证到生产交付，持续解决真实问题。
+    en: >-
+      I organize models, tools, and business workflows into reliable
+      systems—from validation to production delivery.
+  actions:
+    - { variant: primary,   href: "#projects", label: { zh: 进入项目, en: View Projects } }
+    - { variant: secondary, href: "#contact",  label: { zh: 联系交流, en: Start a Conversation } }
+  coordinates:                   # 装饰性坐标，aria-hidden
+    a: NODE / 27.58
+    b: SYSTEM / ONLINE
+  photo:                         # 留空则渲染虚线占位框
+    webp:   assets/profile-900.webp
+    jpg:    assets/profile-900.jpg
+    width:  900
+    height: 1124
+    alt:
+      zh: 李祖民在录音棚内佩戴耳机的生活照片
+      en: Zumin Li wearing headphones in a recording studio
+  note:
+    index:   { zh: 档案 / 01, en: PROFILE / 01 }
+    heading: { zh: 我把模型能力，接进真实系统。, en: I connect model capabilities to real systems. }
+    grid:
+      - { dt: { zh: 工作主线, en: Focus },       dd: { zh: 智能体工程化, en: Agent Engineering } }
+      - { dt: { zh: 技术底座, en: Core Stack },  dd: { zh: Java / Python, en: Java / Python } }
+      - { dt: { zh: 交付方式, en: Delivery },    dd: { zh: 端到端研发, en: End-to-end } }
+      - { dt: { zh: 开源身份, en: Open Source }, dd: { zh: FlyingJackLee, en: FlyingJackLee } }
+    # 整个 link 节点删掉 → 链接不渲染。href 是语言相关的：中文访客拿中文版 PDF。
+    link:
+      href:
+        zh: assets/resume.zh.pdf
+        en: assets/resume.en.pdf
+      label: { zh: 打开中文简历 ↗, en: Open Résumé ↗ }
+
+# ── 能力地图 ──
+capabilities:
+  eyebrow: { zh: 能力地图, en: CAPABILITY MAP }
+  heading: { zh: 从智能体设计，到生产环境落地。, en: From agent design to production. }
+  lead:
+    zh: 围绕工作流、企业 AI 工程和生产交付建立完整能力闭环。
+    en: >-
+      A complete practice spanning workflows, enterprise AI engineering,
+      and production delivery.
+  items:
+    - code: 01 / AGENT
+      id: agent
+      title: { zh: 智能体工作流, en: Agent Workflows }
+      body:
+        zh: 任务规划、状态管理、工具调用、记忆与上下文，以及人工复核和多智能体协作。
+        en: >-
+          Task planning, state, tool use, memory, context, human review,
+          and multi-agent collaboration.
+    - code: 02 / LLM APP
+      id: llm
+      title: { zh: 企业 AI 工程, en: Enterprise AI Engineering }
+      body:
+        zh: RAG、MCP、LLM Gateway、结构化输出与安全边界，把模型能力接入真实业务。
+        en: >-
+          RAG, MCP, LLM gateways, structured output, and safety boundaries
+          for real business systems.
+    - code: 03 / DELIVERY
+      id: delivery
+      title: { zh: 生产级交付, en: Production Delivery }
+      body:
+        zh: 后端架构、系统集成、容器化、可观测性与 Kubernetes 部署，覆盖完整交付链路。
+        en: >-
+          Backend architecture, integration, containers, observability,
+          and Kubernetes across the delivery chain.
+
+# ── 终端动画 ──
+terminal:
+  host: "portfolio@zumin: ~/agent-lab"
+  status: { zh: 流程在线, en: PIPELINE ONLINE }
+  steps:
+    - cmd: agent.run("tender-review")
+      out:
+        zh: 编排解析、审查、复核与报告生成流程。
+        en: >-
+          Orchestrating parsing, review, human verification, and report
+          generation.
+    - cmd: gateway.redact("sensitive-data")
+      out:
+        zh: 在企业边界内识别、替换并恢复敏感信息。
+        en: >-
+          Detecting, replacing, and restoring sensitive data inside the
+          enterprise boundary.
+    - cmd: rag.retrieve("policy-evidence")
+      out:
+        zh: 混合检索证据，并保留来源与引用关系。
+        en: >-
+          Retrieving evidence through hybrid search while preserving sources
+          and citations.
+    - cmd: deploy --target kubernetes
+      out:
+        zh: 将验证通过的智能体工作流交付到生产环境。
+        en: Shipping validated agent workflows to production.
+
+# ── 项目案例 ──
+#   category 用于首页筛选，必须是 filters 里定义过的 id
+#   case 里没有 body / items / links 的小节不会渲染（见 # TODO）
+projects:
+  eyebrow: { zh: 项目案例, en: SELECTED WORK }
+  heading: { zh: 把关键项目讲成完整的工程案例。, en: "Engineering stories, not project thumbnails." }
+  lead:
+    zh: 呈现真实问题、系统架构、个人职责和关键技术决策。
+    en: >-
+      Each case frames the problem, architecture, ownership, and
+      consequential technical decisions.
+  case_summary: { zh: 查看案例结构, en: Explore Case Structure }
+  case_link: { zh: 阅读完整案例 ↗, en: Read full case ↗ }
+  filters:
+    - { id: all,      label: { zh: 全部,     en: All } }
+    - { id: agent,    label: { zh: AI Agent, en: AI Agent } }
+    - { id: platform, label: { zh: 平台架构, en: Platform } }
+    - { id: cloud,    label: { zh: 云原生,   en: Cloud Native } }
+
+  items:
+    # ───────────────────────────────── 01
+    - slug: bid-agent
+      index: "01"
+      category: [agent, platform]
+      kind:  { zh: AI Agent, en: AI Agent }
+      badge: { zh: 公开项目, en: Public Project }
+      title: { zh: AI 投标助手, en: AI Tender Assistant }
+      blurb:
+        zh: 围绕招标解析、合规审查、人工复核和报告生成构建端到端智能体流程。
+        en: >-
+          An end-to-end agent workflow for tender parsing, compliance
+          review, human verification, and reporting.
+      tags: [LangGraph, RAG, FastAPI, React]
+      meta:
+        org:  { zh: AI Agent / 全栈开发, en: AI Agent & Full-stack Development }
+        date: { zh: Release @ 2026年7月, en: Release @ July 2026 }
+      case:
+        - heading: { zh: 业务问题与使用场景, en: Business problem and use cases }
+          body:
+            zh: 基于 LangGraph 的招投标智能体平台，覆盖招标解析、合规审查、人工复核、批量评审与横向对比，集成 OCR、法规知识库 RAG 和自动报告生成能力。
+            en: >-
+              A LangGraph-based bidding assistant covering tender parsing,
+              compliance review, human verification, batch evaluation and
+              bidder comparison, with integrated OCR, regulation-focused RAG
+              and automated reporting.
+        - heading: { zh: 工作流架构与关键节点, en: Workflow architecture and key nodes }
+          items:
+            - zh: 负责智能体架构与核心工作流设计，使用 LangGraph StateGraph 编排文件解析、要点提取、合规核查和报告生成，并通过 Human-in-the-loop 与 Checkpointer 实现人工复核、状态持久化及断点恢复。
+              en: >-
+                Designed stateful LangGraph workflows for document parsing,
+                requirement extraction, compliance checking and report
+                generation, with Human-in-the-loop review and
+                checkpoint-based recovery.
+        - heading: { zh: 个人职责与工程决策, en: Ownership and engineering decisions }
+          items:
+            - zh: 构建统一工具调用与安全网关，整合文档解析、OCR、敏感信息脱敏和 PDF 生成，并从代码层阻止未脱敏内容进入 LLM 与向量模型。
+              en: >-
+                Built a unified tool and security layer for document
+                processing, OCR, data sanitization and PDF generation,
+                preventing unsanitized content from reaching LLM and
+                embedding services.
+            - zh: 基于 PostgreSQL、pgvector 与本地 Embedding 搭建法规 RAG，实现条款检索和引用回填；使用 FastAPI、React 与 TypeScript 完成平台化，支持批量并发评审、人工决策及进度追踪。
+              en: >-
+                Developed regulation-focused RAG with PostgreSQL, pgvector
+                and local embeddings, and productized the agent with FastAPI,
+                React and TypeScript for concurrent batch review, human
+                decisions and progress tracking.
+        - heading: { zh: 演示、代码与相关资料, en: "Demo, code, and supporting material" }
+          links:
+            - url: https://github.com/FlyingJackLee/bid-agent
+              label: github.com/FlyingJackLee/bid-agent
+
+    # ───────────────────────────────── 02
+    - slug: llm-gateway
+      index: "02"
+      category: [agent, platform]
+      kind:  { zh: 平台架构, en: Platform }
+      badge: { zh: 企业安全, en: Enterprise Security }
+      title: { zh: LLM 数据脱敏网关, en: LLM Data Redaction Gateway }
+      blurb:
+        zh: 在企业边界内完成敏感信息识别、Token 化脱敏与结果恢复，连接私有模型和 MaaS。
+        en: >-
+          Detects, tokenizes, and restores sensitive data inside the
+          enterprise boundary while connecting private models and MaaS.
+      tags: [LLM Gateway, Token Vault, MaaS]
+      meta:
+        org:  { zh: 系统架构设计 / 核心研发, en: System Architecture & Core Development }
+        date: { zh: Release @ 2026年6月, en: Release @ June 2026 }
+      case:
+        - heading: { zh: 安全边界与威胁模型, en: Security boundary and threat model }
+          body:
+            zh: 面向企业 AI Agent 与 MaaS 调用场景的 LLM 安全接入平台，采用本地安全处理加云端推理的架构，在企业边界内完成敏感数据识别、Token 化脱敏与结果恢复，实现云端大模型的安全调用。
+            en: >-
+              An LLM security gateway for enterprise AI Agents and MaaS
+              services, using local security processing and cloud inference
+              to detect, tokenize and restore sensitive data within the
+              enterprise boundary.
+        - heading: { zh: 请求代理与数据恢复链路, en: Request proxy and data restoration path }
+          items:
+            - zh: 设计 Token Vault 并完成核心服务研发，实现敏感信息替换、映射管理、调用代理、结果恢复与访问控制。
+              en: >-
+                Designed the Token Vault and core services for data
+                replacement, mapping, request proxying, response restoration
+                and access control.
+        - heading: { zh: 架构取舍与访问控制, en: Architecture trade-offs and access control }
+          items:
+            - zh: 负责混合架构与 LLM Gateway 核心链路设计，统一接入 AI 应用、安全策略、企业私有模型及云端 MaaS 服务。
+              en: >-
+                Designed the hybrid architecture and LLM Gateway for unified
+                access to AI applications, security policies, private models
+                and cloud MaaS services.
+            - zh: 融合规则引擎、实体识别模型与本地大语言模型，实现复杂业务数据的语义识别、动态脱敏及安全校验。
+              en: >-
+                Combined rule engines, named entity recognition and local
+                LLMs for semantic detection, dynamic sanitization and
+                security validation.
+        - heading: { zh: 部署形态与扩展方向, en: Deployment models and extensibility }
+          # TODO 待补：部署拓扑、横向扩展策略、后续规划
+
+    # ───────────────────────────────── 03
+    - slug: expert-engine
+      index: "03"
+      category: [agent, platform]
+      kind:  { zh: 推理引擎, en: Reasoning Engine }
+      badge: { zh: 证据驱动, en: Evidence-driven }
+      title: { zh: Expert Engine, en: Expert Engine }
+      blurb:
+        zh: 以混合检索、证据管理和可复算评分为基础，输出可解释、可追溯的研判建议。
+        en: >-
+          Combines hybrid retrieval, evidence management, and reproducible
+          scoring for explainable, traceable recommendations.
+      tags: [pgvector, OpenSearch, FastAPI]
+      meta:
+        org:  { zh: 系统架构设计 / 核心研发, en: System Architecture & Core Development }
+        date: { zh: Release @ 2026年8月, en: Release @ August 2026 }
+      case:
+        - heading: { zh: 专家画像与知识组织, en: Expert profiles and knowledge organization }
+          body:
+            zh: 面向商务机会研判的 AI 专家引擎，基于 FastAPI、PostgreSQL、pgvector 与 OpenSearch，构建了包含 Expert Profile、Knowledge Engine、Organization Engine 等完整推理基础设施，支持从政策、新闻等事件中自动识别商机、推荐目标单位与部门、匹配公司能力并给出可解释的评分与行动建议。
+            en: >-
+              An AI expert engine for business opportunity intelligence,
+              built with FastAPI, PostgreSQL, pgvector and OpenSearch. It
+              automatically identifies opportunities from policies and news,
+              recommends target organizations and departments, matches
+              company capabilities, and provides explainable scores and
+              actionable recommendations.
+        - heading: { zh: 向量、BM25 与 SQL 混合检索, en: "Vector, BM25, and SQL hybrid retrieval" }
+          items:
+            - zh: 负责 Expert Engine 整体架构设计与核心模块研发，设计 Expert Profile 框架、混合检索流程（向量加 BM25 加 SQL）及证据驱动的推理管线，确保结论可解释、可追溯。
+              en: >-
+                Designed the overall architecture and core modules, including
+                the Expert Profile framework, hybrid retrieval pipeline
+                (vector + BM25 + SQL) and evidence-driven reasoning workflow
+                to ensure explainability and traceability.
+        - heading: { zh: 证据链与评分模型, en: Evidence chains and scoring models }
+          items:
+            - zh: 开发 Organization Engine、Evidence Engine、Scoring Engine 与 Need Engine，实现基于职责匹配、主题映射和历史案例的单位与部门智能推荐，统一证据管理、可复算评分模型及独立评审模块，支持证据缺失自动触发补充检索。
+              en: >-
+                Developed the Organization, Evidence, Scoring and Need
+                Engines, implementing intelligent recommendation of
+                organizations and departments based on responsibility
+                matching, topic mapping and historical cases, with unified
+                evidence management and reproducible scoring.
+        - heading: { zh: 结构化输出与错误处理, en: Structured output and error handling }
+          # TODO 待补：输出 schema、校验策略、失败降级路径
+
+    # ───────────────────────────────── 04
+    - slug: warehouse
+      index: "04"
+      category: [cloud, platform]
+      kind:  { zh: 云原生, en: Cloud Native }
+      badge: { zh: 全栈系统, en: Full-stack System }
+      title: { zh: 智能仓储收银系统, en: Smart Warehouse & POS System }
+      blurb:
+        zh: 从业务一体化系统逐步演进到微服务架构，并覆盖 Web、移动端和交付流水线。
+        en: >-
+          Evolved an integrated business system into microservices across
+          web, mobile, and delivery pipelines.
+      tags: [Spring Cloud, Kubernetes, Istio, Flutter]
+      meta:
+        org:  { zh: 全栈开发, en: Full-stack Development }
+        date: { zh: Release @ 2024年11月, en: Release @ November 2024 }
+      case:
+        - heading: { zh: 业务模块与系统边界, en: Business modules and system boundaries }
+          body:
+            zh: 面向仓储零售场景的一体化管理平台，覆盖商品库存、订单结算、收银核销及移动作业。系统由单体应用逐步演进为基于 Spring Cloud Alibaba、Kubernetes 与 Istio 的云原生微服务架构，并接入 AI Agent 实现场景化业务调度。
+            en: >-
+              An integrated platform for warehouse retail operations,
+              covering inventory, order settlement, cashier verification and
+              mobile workflows. The system evolved from a monolith into a
+              cloud-native microservice architecture based on Spring Cloud
+              Alibaba, Kubernetes and Istio.
+          items:
+            - zh: 负责前后端全栈研发及业务模块、接口与数据库设计，完成 Web 管理端和 Flutter 移动作业端，并基于 Langchain4j 接入业务智能体。
+              en: >-
+                Delivered full-stack development across domain, API and
+                database design, built the Angular and Flutter clients, and
+                integrated business agents with Langchain4j.
+        - heading: { zh: 单体到微服务的演进, en: Monolith-to-microservices evolution }
+          # TODO 待补：三个阶段各自的触发原因、拆分边界、遇到的问题
+        - heading: { zh: 流量治理与灰度发布, en: Traffic governance and canary delivery }
+          items:
+            - zh: 主导三阶段架构演进，引入分布式缓存与 Istio 服务网格，实现路由调度、流量管控、故障熔断以及金丝雀和 A/B 灰度发布。
+              en: >-
+                Led three phases of architectural evolution, introducing
+                distributed caching and the Istio service mesh for routing,
+                traffic control, circuit breaking, canary releases and A/B
+                testing.
+        - heading: { zh: CI/CD 与运行保障, en: CI/CD and operational reliability }
+          items:
+            - zh: 搭建 Jenkins 与 GitOps CI/CD 流水线，整合代码检查、镜像构建、多环境部署及版本回滚，提升交付效率并降低部署误差。
+              en: >-
+                Built a Jenkins and GitOps CI/CD pipeline integrating code
+                checks, image builds, multi-environment deployment and
+                version rollback.
+          links:
+            - url: https://github.com/flyingjack-cloud
+              label: github.com/flyingjack-cloud
+
+    # ───────────────────────────────── 05
+    - slug: codearts
+      index: "05"
+      category: [cloud]
+      kind:  { zh: 研发效能, en: DevOps }
+      badge: { zh: 商用产品, en: Commercial Product }
+      title: { zh: 华为云 CodeArts 云测, en: Huawei Cloud CodeArts Testing }
+      blurb:
+        zh: 商用 PaaS 云测试产品的后端研发，以及为团队自研的测试数据注入工具。
+        en: >-
+          Backend engineering for a commercial PaaS cloud-testing product,
+          plus an in-house test data injection tool.
+      tags: [Java, Python, PaaS, REST API]
+      meta:
+        org:  { zh: 后端开发, en: Backend Development }
+        date: { zh: Release @ 2023年8月, en: Release @ August 2023 }
+      case:
+        - heading: { zh: 产品定位与客户场景, en: Product scope and customer context }
+          body:
+            zh: 华为云 CodeArts DevOps 软件生产线中的 PaaS 云测试产品，为商业及混合云客户提供测试执行、数据管理和服务支撑能力，强调高可用、高性能与复杂依赖环境下的稳定交付。
+            en: >-
+              A PaaS cloud testing product within Huawei Cloud CodeArts
+              DevOps, providing test execution, data management and service
+              support for commercial and hybrid-cloud customers, with an
+              emphasis on high availability, performance and reliable
+              delivery in complex dependency environments.
+        - heading: { zh: 测试数据注入工具, en: Test data injection tooling }
+          items:
+            - zh: 制定项目测试标准规范，为团队开发测试数据注入工具，实现复杂依赖环境下 Fake 数据的自动多级注入，为团队节约 30% 以上的需求开发时间。
+              en: >-
+                Developed a test data injection tool enabling automated
+                multi-level injection of mock data in complex dependency
+                environments, cutting the team's development cycle by over
+                30%.
+        - heading: { zh: 后端架构与高可用, en: Backend architecture and availability }
+          items:
+            - zh: 负责 PaaS 云测产品商用环境后端需求拆解、架构设计与功能开发，聚焦服务高可用、高性能架构落地，优化接口响应效率与并发承载能力。
+              en: >-
+                Implemented backend feature development based on Java/Python
+                and microservice architecture, designed and maintained
+                standardized REST APIs, and optimized business logic for
+                distributed systems to guarantee high availability and
+                performance.
+        - heading: { zh: 产品页与相关资料, en: Product page and material }
+          links:
+            - url: https://www.huaweicloud.com/product/cpts.html
+              label: huaweicloud.com/product/cpts.html
+
+# ── 职业路径 ──
+experience:
+  eyebrow: { zh: 职业路径, en: CAREER PATH }
+  heading: { zh: 从平台研发，到一线 AI 交付。, en: From platform engineering to frontline AI delivery. }
+  lead:
+    zh: 持续拓展后端系统、产品研发、架构设计与客户场景落地的边界。
+    en: >-
+      Expanding across backend systems, product engineering, architecture,
+      and customer delivery.
+  items:
+    - id: telecom
+      date:  { zh: 2026.03 — 至今, en: 2026.03 — PRESENT }
+      title: { zh: 中国电信 · FDE 工程师, en: China Telecom · FDE Engineer }
+      body:
+        zh: 政企 AI 场景验证、Agent 工程化与生产交付。
+        en: >-
+          Enterprise AI validation, agent engineering, and production
+          delivery.
+      place: { zh: 重庆, en: Chongqing }
+    - id: partner
+      date:  { zh: 2023.11 — 2026.02, en: 2023.11 — 2026.02 }
+      title: { zh: 麒霖通信 · 技术合伙人, en: Qilin Communications · Technical Partner }
+      body:
+        zh: 全栈产品研发、架构演进与部署运维。
+        en: >-
+          Full-stack product development, architecture evolution,
+          deployment, and operations.
+      place: { zh: 贵阳, en: Guiyang }
+    - id: huawei
+      date:  { zh: 2022.07 — 2023.08, en: 2022.07 — 2023.08 }
+      title: { zh: 华为云 · 高级软件工程师, en: Huawei Cloud · Senior Software Engineer }
+      body:
+        zh: PaaS 产品研发、测试工具建设与混合云交付。
+        en: "PaaS engineering, test tooling, and hybrid-cloud delivery."
+      place: { zh: 成都, en: Chengdu }
+    - id: zhejiang
+      date:  { zh: 2017.08 — 2019.08, en: 2017.08 — 2019.08 }
+      title: { zh: 浙江科普教育 · 软件工程师, en: Zhejiang Science Education · Software Engineer }
+      body:
+        zh: 企业 OA 审批流程与官方网站的全栈研发。
+        en: >-
+          Full-stack delivery of the enterprise OA approval system and
+          corporate website.
+      place: { zh: 杭州, en: Hangzhou }
+
+# ── 技术栈 ──
+stack:
+  eyebrow: { zh: 技术栈, en: STACK }
+  heading: { zh: 技术选择，始终服务于系统目标。, en: Technology choices serve the system. }
+  lead:
+    zh: 从模型编排到底层基础设施，以合适的工具完成稳定交付。
+    en: >-
+      From model orchestration to infrastructure, I choose tools for
+      reliable delivery.
+  education:
+    - id: master
+      degree: { zh: 软件工程硕士, en: MSc Software Engineering }
+      org:    { zh: 格拉斯哥大学 · Distinction, en: University of Glasgow · Distinction }
+    - id: bachelor
+      degree: { zh: 通信工程学士, en: BEng Communication Engineering }
+      org:    { zh: 杭州电子科技大学, en: Hangzhou Dianzi University }
+  groups:
+    - label: { zh: 智能体开发, en: Agent Development }
+      items: LangGraph · LangChain · LangChain4j · ReAct · Human-in-the-loop
+    - label: { zh: LLM 工程, en: LLM Engineering }
+      items: MCP · RAG · Tool Calling · LLM Gateway · Embedding · pgvector
+    - label: { zh: 后端系统, en: Backend Systems }
+      items: Java · Python · Spring Boot · Spring Cloud Alibaba · FastAPI · Kafka
+    - label: { zh: 云原生交付, en: Cloud-native Delivery }
+      items: Kubernetes · Docker · Istio · Jenkins · GitOps · Prometheus
+    - label: { zh: 数据与客户端, en: Data & Clients }
+      items: PostgreSQL · MySQL · Redis · Elasticsearch · React · Angular · Flutter
+
+# ── 联系 ──
+contact:
+  eyebrow: { zh: 保持联系, en: STAY CONNECTED }
+  heading: { zh: 聊聊智能体，也聊聊系统怎么真正落地。, en: "Let’s talk agents—and how systems actually ship." }
+  lead:
+    zh: 适合技术交流、开源协作，以及围绕 AI Agent 工程化的实践讨论。
+    en: >-
+      Open to technical conversations, open-source collaboration, and
+      practical AI agent engineering.
+  email: zumin.li.work@gmail.com
+  cta: { zh: 发送邮件, en: Send Email }
+  # value 为空 → 该卡片不渲染
+  # href 为空但 value 有值 → 卡片变成按钮，点击复制账号
+  socials:
+    - { id: github,   code: GH, name: { zh: GitHub, en: GitHub },   value: FlyingJackLee,        href: "https://github.com/FlyingJackLee" }
+    - { id: wechat,   code: WX, name: { zh: 微信, en: WeChat },      value: "13675823946",        href: "" }
+    - { id: linkedin, code: IN, name: { zh: LinkedIn, en: LinkedIn }, value: in/zumin-li-147b97114, href: "https://www.linkedin.com/in/zumin-li-147b97114/" }
+    - { id: whatsapp, code: WA, name: { zh: WhatsApp, en: WhatsApp }, value: "",                  href: "" }
+    - { id: telegram, code: TG, name: { zh: Telegram, en: Telegram }, value: "",                  href: "" }
+
+footer:
+  left:  { zh: © 2026 李祖民, en: © 2026 Zumin Li }
+  right: { zh: AI Agent · 系统架构 · 工程交付, en: AI Agents · System Architecture · Engineering Delivery }
