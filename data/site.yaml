@@ -176,14 +176,13 @@ projects:
   filters:
     - { id: all,      label: { zh: 全部,     en: All } }
     - { id: agent,    label: { zh: AI Agent, en: AI Agent } }
-    - { id: platform, label: { zh: 平台架构, en: Platform } }
-    - { id: cloud,    label: { zh: 云原生,   en: Cloud Native } }
+    - { id: platform, label: { zh: 平台与云, en: Platform & Cloud } }
 
   items:
     # ───────────────────────────────── 01
     - slug: bid-agent
       index: "01"
-      category: [agent, platform]
+      category: [agent]
       kind:  { zh: AI Agent, en: AI Agent }
       badge: { zh: 公开项目, en: Public Project }
       title: { zh: AI 投标助手, en: AI Tender Assistant }
@@ -235,7 +234,7 @@ projects:
     # ───────────────────────────────── 02
     - slug: llm-gateway
       index: "02"
-      category: [agent, platform]
+      category: [platform]
       kind:  { zh: 平台架构, en: Platform }
       badge: { zh: 企业安全, en: Enterprise Security }
       title: { zh: LLM 数据脱敏网关, en: LLM Data Redaction Gateway }
@@ -277,12 +276,25 @@ projects:
                 LLMs for semantic detection, dynamic sanitization and
                 security validation.
         - heading: { zh: 部署形态与扩展方向, en: Deployment models and extensibility }
-          # TODO 待补：部署拓扑、横向扩展策略、后续规划
+          # 依据「类似 APISIX 那样的网关」这一条口述整理，细节待确认
+          items:
+            - zh: 以独立网关进程部署在调用链路上，形态接近 APISIX：AI 应用把请求指向网关，由网关完成敏感信息识别与脱敏、转发到企业私有模型或云端 MaaS，再把结果还原后返回，调用方无需感知脱敏逻辑。
+              en: >-
+                Deployed as a standalone gateway process in the request path,
+                in the shape of an API gateway such as APISIX: applications
+                point at the gateway, which detects and tokenizes sensitive
+                data, forwards to private models or cloud MaaS, and restores
+                the response — callers stay unaware of the redaction layer.
+            - zh: 接入新的模型供应商以增加路由配置的方式完成，调用方代码不变，安全策略与路由规则集中在网关一侧维护。
+              en: >-
+                Onboarding a new model provider is a routing-configuration
+                change rather than a code change on the caller side; security
+                policies and routing rules stay centralized in the gateway.
 
     # ───────────────────────────────── 03
     - slug: expert-engine
       index: "03"
-      category: [agent, platform]
+      category: [agent]
       kind:  { zh: 推理引擎, en: Reasoning Engine }
       badge: { zh: 证据驱动, en: Evidence-driven }
       title: { zh: Expert Engine, en: Expert Engine }
@@ -324,12 +336,35 @@ projects:
                 matching, topic mapping and historical cases, with unified
                 evidence management and reproducible scoring.
         - heading: { zh: 结构化输出与错误处理, en: Structured output and error handling }
-          # TODO 待补：输出 schema、校验策略、失败降级路径
+          # 依据 github.com/FlyingJackLee/opportunity-platform 的 README 整理
+          items:
+            - zh: 结构化输出统一收敛到 LLM Gateway 的 structured_generate 入口，事件分析、专家研判、复核以及采集侧的相关性过滤四类任务共用同一条调用路径，模型厂商的差异被挡在网关之内。
+              en: >-
+                Structured output is funnelled through a single
+                structured_generate entry point on the LLM Gateway, shared by
+                event analysis, expert judgement, review and the collector's
+                relevance filter, so provider differences stay behind the
+                gateway boundary.
+            - zh: 配置缺失时显式失败而不是静默降级：指定了真实厂商却没有配 API Key，应用在启动阶段直接报错退出，绝不悄悄退回 stub 实现——避免上线后拿着假数据当真结果。
+              en: >-
+                Misconfiguration fails loudly instead of degrading silently: if
+                a real provider is selected without an API key, the application
+                aborts at startup rather than quietly falling back to the stub
+                implementation, so fake output can never be mistaken for real
+                results in production.
+            - zh: Chat 与 Embedding 独立选型（ADR-0004），因为部分厂商只提供 chat 接口而没有 embeddings 端点；pgvector 的列宽是 schema 层面的硬约束而非配置项，更换输出维度不同的 embedding 模型必须补一条 migration，这一点被写进文档以杜绝“会自动识别维度”的错误预期。
+              en: >-
+                Chat and embedding providers are selected independently
+                (ADR-0004), since some vendors ship chat completions without an
+                embeddings endpoint. The pgvector column width is a schema-level
+                constraint rather than a setting: switching to a model with a
+                different output dimension requires an explicit migration, and
+                the docs say so to kill any expectation of auto-detection.
 
     # ───────────────────────────────── 04
     - slug: warehouse
       index: "04"
-      category: [cloud, platform]
+      category: [platform]
       kind:  { zh: 云原生, en: Cloud Native }
       badge: { zh: 全栈系统, en: Full-stack System }
       title: { zh: 智能仓储收银系统, en: Smart Warehouse & POS System }
@@ -359,7 +394,21 @@ projects:
                 database design, built the Angular and Flutter clients, and
                 integrated business agents with Langchain4j.
         - heading: { zh: 单体到微服务的演进, en: Monolith-to-microservices evolution }
-          # TODO 待补：三个阶段各自的触发原因、拆分边界、遇到的问题
+          # 依据「核心系统会被非核心系统影响」这一条口述整理，
+          # 具体是哪些非核心模块、各阶段的触发点待补
+          items:
+            - zh: 单体阶段核心的库存与收银链路和非核心功能跑在同一个进程里，非核心模块的资源占用或故障会直接波及核心交易，这是推动拆分的首要原因。
+              en: >-
+                In the monolith, the core inventory and checkout paths shared a
+                process with non-core features, so resource pressure or failures
+                in the latter propagated straight into core transactions. That
+                coupling, not code size, was what forced the split.
+            - zh: 因此拆分依据是故障域隔离而非代码规模：把核心交易链路与非核心功能分开部署，各自独立扩容与发布，互不牵连。
+              en: >-
+                The decomposition therefore followed fault-domain boundaries
+                rather than module size: core transaction services and non-core
+                features were deployed separately, each scaling and releasing on
+                its own without dragging the other down.
         - heading: { zh: 流量治理与灰度发布, en: Traffic governance and canary delivery }
           items:
             - zh: 主导三阶段架构演进，引入分布式缓存与 Istio 服务网格，实现路由调度、流量管控、故障熔断以及金丝雀和 A/B 灰度发布。
@@ -382,7 +431,7 @@ projects:
     # ───────────────────────────────── 05
     - slug: codearts
       index: "05"
-      category: [cloud]
+      category: [platform]
       kind:  { zh: 研发效能, en: DevOps }
       badge: { zh: 商用产品, en: Commercial Product }
       title: { zh: 华为云 CodeArts 云测, en: Huawei Cloud CodeArts Testing }

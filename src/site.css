@@ -33,3 +33,77 @@ picture { display: contents; }
 
 /* 折叠里的「阅读完整案例」链接，复用已有的 .resume-link 外观 */
 .project-details .resume-link { margin-top: var(--space-4); }
+
+/* ─────────────────────────────────────────────────────────────────
+   首屏构图修正（三处，都是原设计稿里的问题）
+
+   1. 位置：.outline-word 原本固定在 top: 4%，在 1440/1024/390 三档下
+      完全落在人像上方、自己独占顶部一条，"巨型描边字从人像背后穿过"
+      的效果没有出现。按断点下移到与圆形和人像重叠。
+
+      锚点选择：>1040px 时 .portrait-stage 是底部对齐的网格项，与 hero
+      底边距离恒定（padding-bottom 68px + 照片 margin-bottom 8px），用
+      bottom 定位不受视口高度影响；≤1040px 人像移到第一行，改用 top。
+
+   2. 层级：.portrait-stage 带 z-index: 2 且 position: relative，自成
+      层叠上下文，把圆和照片作为整体抬到描边字之上，于是圆把字母中段
+      整个吃掉。解除该上下文，让 圆(0) < 描边字(1) < 照片(2) 同层排序。
+
+   3. 对比度：描边色 --border 亮度 41.8%，圆面 --surface 亮度 38.8%，
+      只差 3 个点（对页面底色 --bg 22.9% 则差 18.8 点），再叠加
+      opacity .68，描边压到圆上等于消失。改用白色基底的半透明描边，
+      落在底色或圆面上都保持可辨，同时仍然弱于正文（brand-spec 第 2 条）。
+   ───────────────────────────────────────────────────────────────── */
+.outline-word {
+  top: auto;
+  bottom: 400px;
+  z-index: 1;
+  -webkit-text-stroke-color: color-mix(in oklab, var(--fg), transparent 82%);
+  opacity: 1;
+}
+.portrait-stage { z-index: auto; }
+.portrait-stage::before,
+.portrait-stage::after { z-index: 0; }
+
+@media (max-width: 1040px) { .outline-word { top: 166px; bottom: auto; } }
+@media (max-width: 680px)  { .outline-word { top: 104px; } }
+@media (max-width: 620px)  { .outline-word { top: 96px; } }
+
+/* 环形动效原本是 iteration-count: 1，播一遍就定格在 scale(1.03)，
+   等于只在加载时动一次。改为无限来回，形成 10 秒一轮的缓慢轨道呼吸。
+   减少动态效果偏好由 styles.css 里的 prefers-reduced-motion 统一压制。 */
+.portrait-stage::after { animation-iteration-count: infinite; }
+
+/* ─────────────────────────────────────────────────────────────────
+   Token 覆盖。site.css 在 styles.css 之后加载，同特异性下后者胜出。
+
+   1. --container-max 1200 → 1440
+      原稿里 .future-hero 是 min(100%, 1440px) 而 .container 是 1200px，
+      首屏比下面所有区块宽 240px，滚动时内容会"突然缩进去"。对齐到 1440。
+
+   2. --text-xs 12 → 13，--text-sm 14 → 15
+      12px 中文在 .tag(131字)、.timeline-date(63字)、.social-value(45字)
+      这些真正要读的地方偏小；14px 用在 .stack-row p(321字)、
+      .project-details ul(192字)、.project-card > p(183字) 等正文上。
+      --text-base 保持 16px，不动整体节奏。
+   ───────────────────────────────────────────────────────────────── */
+:root {
+  --container-max: 1440px;
+  --text-xs: 13px;
+  --text-sm: 15px;
+}
+
+/* 首屏不再被 100vh 撑满。原稿 min-height: calc(100vh - 78px) 配 align-items: end，
+   多余高度全堆在顶部：视口高 900 时顶部空 162px，1200 时空 462px，1:1 增长。
+   改为跟随内容（744px），顶部空白恒定 84px，下方顺带露出能力地图的开头。 */
+.future-hero { min-height: auto; }
+
+/* 社交卡片的平台图标（app.js 注入 SVG，缺图标时回退到两字母代号） */
+.social-code svg { display: block; width: 22px; height: 22px; fill: currentColor; }
+
+/* .project-card > p 原有 min-height: 66px，是按 568px 窄卡的 2 行算的。
+   容器加宽到 1440 后中文一行就排完，宽屏下每张卡凭空多出 40px 空带。
+   去掉。代价：1280px 与 620px 这两个宽度带上，脱敏网关那张卡的描述会
+   比同行其他卡多一行，标签行相差 26px（卡片本身仍等高，网格会拉伸）。
+   若要换回对齐优先，把下面改成 min-height: 52px（正好两行）即可。 */
+.project-card > p { min-height: 0; }

@@ -18,6 +18,7 @@ const EXPECTED = [
   '每张项目卡的 <details> 内新增一条「阅读完整案例」链接',
   '首屏档案卡的简历链接 href 由 resume.zh.html（不存在）改为语言相关的 assets/resume.{zh,en}.pdf',
   '社交卡片 1 → 3 张（新增微信、LinkedIn）；≥920px 时三列不增高，768px 两列 +108px，≤620px 单列 +216px',
+  'data-category 重划为互斥两类（原稿 agent/platform/cloud 三类重叠，点“平台架构”只藏掉 1 张卡）',
 ];
 
 const DROP_ATTRS = new Set(['data-i18n', 'data-i18n-attr', 'data-i18n-prefix', 'decoding']);
@@ -41,6 +42,8 @@ function norm(node) {
     if (node.tag === 'img' && ['src', 'width', 'height'].includes(k)) { attrs[k] = '‹资源›'; continue; }
     // 首屏简历链接：原稿指向不存在的 resume.zh.html，现指向真实 PDF
     if (k === 'href' && node.attrs['data-od-id'] === 'resume-link') { attrs[k] = '‹简历›'; continue; }
+    // 项目分类重划：原稿三类重叠，现为互斥两类
+    if (k === 'data-category') { attrs[k] = '‹分类›'; continue; }
     attrs[k] = v;
   }
 
