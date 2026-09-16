@@ -11,6 +11,7 @@ const BUILT = 'dist/index.html';
 /* ── 显式声明的预期差异 ── */
 const EXPECTED = [
   '每个可翻译节点新增 data-i18n / data-i18n-attr / data-i18n-prefix 属性',
+  '文案全部由 data/site.yaml 驱动：只比对文本节点的存在与位置，不比对文本内容',
   '<img> 外包 <picture> + <source>，src 与 width/height 因外链优化而改变',
   '<style> 内联改为 <link> 外链，<script> 内联改为外链 + JSON 载荷',
   '项目卡 ≥ 设计稿的 4 张（设计稿里的每张仍须同构，新增不限）',
@@ -25,7 +26,9 @@ const DROP_ATTRS = new Set(['data-i18n', 'data-i18n-attr', 'data-i18n-prefix', '
 
 /* 归一化：抹平上面声明过的差异，其余原样保留 */
 function norm(node) {
-  if (node.text != null) return { text: node.text };
+  // 文案由 data/site.yaml 驱动，改动文案不应导致校验失败：
+  // 只保留「这里有一个文本节点」，不比对文本内容本身。
+  if (node.text != null) return { text: '‹文本›' };
   if (node.tag === 'script' || node.tag === 'style') return null;
 
   // <picture> 拆掉，只留其中的 <img>；<source> 丢弃

@@ -19,8 +19,8 @@ site:
     mark: "/"
     tail: DEV
   title:
-    zh: 李祖民｜未来系统构建者
-    en: Zumin Li | Builder of Future Systems
+    zh: 李祖民｜AI Agent · 后端
+    en: Zumin Li | AI Agent Engineer · Backend
   description:
     zh: 李祖民的未来感开发者作品集，展示 AI Agent、系统架构与工程交付能力。
     en: >-
@@ -64,10 +64,11 @@ hero:
   name:    { zh: 李祖民, en: Zumin Li }
   role:    { zh: 软件工程师 / AI Agent 开发, en: SOFTWARE ENGINEER / AI AGENT DEVELOPER }
   lead:
-    zh: 把模型、工具与业务流程组织成可靠系统。从方案验证到生产交付，持续解决真实问题。
+    zh: 五年以上软件开发经验，当前专注于智能体编排与 LLM 应用落地，有 Java 微服务、分布式系统与云原生架构方面的经验。
     en: >-
-      I organize models, tools, and business workflows into reliable
-      systems—from validation to production delivery.
+      5+ years of software engineering experience, currently focused on agent orchestration
+      and LLM applications, with experience in Java microservices, distributed systems and
+      cloud-native architecture.
   actions:
     - { variant: primary,   href: "#projects", label: { zh: 进入项目, en: View Projects } }
     - { variant: secondary, href: "#contact",  label: { zh: 联系交流, en: Start a Conversation } }
@@ -84,7 +85,7 @@ hero:
       en: Zumin Li wearing headphones in a recording studio
   note:
     index:   { zh: 档案 / 01, en: PROFILE / 01 }
-    heading: { zh: 我把模型能力，接进真实系统。, en: I connect model capabilities to real systems. }
+    heading: { zh: 把模型能力，接进真实系统。, en: I connect model capabilities to real systems. }
     grid:
       - { dt: { zh: 工作主线, en: Focus },       dd: { zh: 智能体工程化, en: Agent Engineering } }
       - { dt: { zh: 技术底座, en: Core Stack },  dd: { zh: Java / Python, en: Java / Python } }
@@ -165,12 +166,11 @@ terminal:
 #   case 里没有 body / items / links 的小节不会渲染（见 # TODO）
 projects:
   eyebrow: { zh: 项目案例, en: SELECTED WORK }
-  heading: { zh: 把关键项目讲成完整的工程案例。, en: "Engineering stories, not project thumbnails." }
+  heading: { zh: 从智能体，到撑住它的那套系统。, en: "From agents to the infrastructure that carries them." }
   lead:
-    zh: 呈现真实问题、系统架构、个人职责和关键技术决策。
+    zh: 用 Java、微服务与云原生技术，打造智能体与可扩展后端系统。
     en: >-
-      Each case frames the problem, architecture, ownership, and
-      consequential technical decisions.
+      Building intelligent agents and scalable backend systems with Java, microservices, and cloud-native technologies.
   case_summary: { zh: 查看案例结构, en: Explore Case Structure }
   case_link: { zh: 阅读完整案例 ↗, en: Read full case ↗ }
   filters:
@@ -490,7 +490,7 @@ experience:
       date:  { zh: 2026.03 — 至今, en: 2026.03 — PRESENT }
       title: { zh: 中国电信 · FDE 工程师, en: China Telecom · FDE Engineer }
       body:
-        zh: 政企 AI 场景验证、Agent 工程化与生产交付。
+        zh: 政企 AI 场景、Agent 工程化与生产交付。
         en: >-
           Enterprise AI validation, agent engineering, and production
           delivery.

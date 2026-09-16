@@ -87,6 +87,8 @@ cwebp -q 82 /tmp/p.png -o assets/profile-900.webp
 `npm run verify` 做四件事：
 
 1. 把设计稿和 `dist/index.html` 解析成节点树，逐节点比对
+   （**只比结构，不比文案**：文案归 `data/site.yaml` 管，改文案不该让校验失败；
+   文本节点的存在与位置仍然比对，所以删段落、丢节点照样会被拦下）
 2. 对照 `verify.js` 顶部声明的预期差异清单，出现任何未声明的差异即失败
 3. 校验 `styles.css` 与设计稿 `<style>` 逐字节一致
 4. 检查各详情页的结构完整性和翻译键是否全部命中
