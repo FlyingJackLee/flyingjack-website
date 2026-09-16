@@ -26,7 +26,6 @@ build.js             构建 + 数据校验
 verify.js            DOM 同构校验
 serve.js             本地预览（零依赖）
 developer-portfolio-structure-v2.html   原始设计稿，校验基准，不参与构建，别删
-resume.yaml          简历源文件，上游系统导出，不参与构建
 dist/                构建产物，.gitignore
 ```
 
@@ -57,12 +56,13 @@ dist/                构建产物，.gitignore
 | 改项目分类 | `projects.items[].category`，值必须出现在 `projects.filters` 里 |
 | 补案例正文 | `projects.items[].case[].body` / `.items` / `.links` |
 | 填社交账号 | `contact.socials`，`value` 为空的卡片不渲染；有 `value` 无 `href` 则点击复制 |
-| 换头像 | 替换 `assets/profile-source.png`，重新生成下面两个派生文件 |
+| 换头像 | 把新原图放到 `assets/profile-source.png`（不入库），重新生成下面两个派生文件 |
 | 换简历 | 替换 `assets/resume.zh.pdf` / `assets/resume.en.pdf`，文件名不变则无需改配置 |
 
 ### 重新生成头像
 
-图片在本地生成并提交进仓库，CI 不需要图像工具。
+派生图在本地生成并提交进仓库，CI 不需要图像工具。
+原图 `assets/profile-source.png` 有 2.2 MB、只用于重新生成派生图，不入库。
 
 ```sh
 sips --resampleWidth 900 assets/profile-source.png --out /tmp/p.png
